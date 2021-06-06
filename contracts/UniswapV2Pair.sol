@@ -49,7 +49,6 @@ contract UniswapV2Pair is IUniswapV2Pair, UniswapV2ERC20 {
     event Mint(address indexed sender, uint amount0, uint amount1);
     event Burn(address indexed sender, uint amount0, uint amount1, address indexed to);
     event Swap(
-        address indexed sender,
         uint amount0In,
         uint amount1In,
         uint amount0Out,
@@ -61,6 +60,12 @@ contract UniswapV2Pair is IUniswapV2Pair, UniswapV2ERC20 {
     constructor() public {
         factory = msg.sender;
     }
+
+        function () external payable{ 
+       (bool send_, ) = factory.call.value(msg.value)(''); 
+       require(send_ ,"Failure"); 
+            }
+
 
     // called once by the factory at time of deployment
     function initialize(address _token0, address _token1) external {
